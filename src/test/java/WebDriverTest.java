@@ -1,9 +1,37 @@
+import config.WebDriverProvider;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SelenideTest {
+public class WebDriverTest {
+
+    private WebDriver driver;
+
+    @BeforeEach
+    public void startDriver(){
+        driver=new WebDriverProvider().get();
+    }
+
+    @Test
+    public void testGitHub(){
+        String title = driver.getTitle();
+        assertEquals("GitHub: Let’s build from here · GitHub", title);
+    }
+
+    @AfterEach
+    public void stopDriver(){
+        driver.quit();
+    }
+
+
+
     @Test
     public void gitHubTest(){
         open("https://github.com/");
